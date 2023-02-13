@@ -42,9 +42,8 @@ export class FoldersController {
     return this.foldersService.update(+id, updateFolderDto);
   }
 
-  @Delete(':name')
-  @HttpCode(204)
-  remove(@Param('name') name: string) {
-    return this.foldersService.removeByName(name);
+  @Delete(':id')
+  async remove(@Param('id') id: string): Promise<any> {
+    return await this.foldersService.removeById(id);
   }
 }

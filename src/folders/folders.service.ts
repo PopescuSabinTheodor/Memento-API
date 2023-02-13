@@ -48,11 +48,12 @@ export class FoldersService {
     return `This action removes a #${id} folder`;
   }
 
-  async removeByName(name: string): Promise<string> {
-    const folder = await this.folderModel.deleteOne({ name: name });
-    if (folder.deletedCount === 0) {
-      throw new NotFoundException(Folder.name, name);
+  async removeById(id: string): Promise<any> {
+    const folder = await this.folderModel.deleteOne({ _id: id });
+    if (folder.acknowledged === true && folder.deletedCount > 0) {
+      return `Folder with id ${id} deleted`;
+    } else {
+      throw new NotFoundException(Folder.name, id);
     }
-    return 'Successfully deleted';
   }
 }
