@@ -1,6 +1,5 @@
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import * as mongoose from 'mongoose';
 import { User } from 'src/users/user.model';
 
 export type FolderDocument = HydratedDocument<Folder>;
@@ -10,7 +9,7 @@ export class Folder {
   @Prop()
   name: string;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  @Prop({ type: Types.ObjectId, ref: 'User' })
   owner: User;
 }
 
