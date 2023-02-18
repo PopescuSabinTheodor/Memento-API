@@ -39,7 +39,7 @@ export class FoldersController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateFolderDto: UpdateFolderDto) {
-    return this.foldersService.update(+id, updateFolderDto);
+    return this.foldersService.update(id, updateFolderDto);
   }
 
   @Delete(':id')

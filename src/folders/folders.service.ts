@@ -5,12 +5,14 @@ import { Injectable } from '@nestjs/common';
 import { CreateFolderDto } from './dto/create-folder.dto';
 import { UpdateFolderDto } from './dto/update-folder.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
+import { UserDocument } from 'src/users/user.model';
 
 @Injectable()
 export class FoldersService {
   constructor(
     @InjectModel('Folder') private readonly folderModel: Model<FolderDocument>,
+    @InjectModel('User') private readonly userModel: Model<UserDocument>,
   ) {}
 
   async create(createFolderDto: CreateFolderDto): Promise<Folder> {
@@ -40,8 +42,28 @@ export class FoldersService {
     return folder;
   }
 
-  update(id: number, updateFolderDto: UpdateFolderDto) {
-    return `This action updates a #${id} folder`;
+  async update(id: string, updateFolderDto: UpdateFolderDto) {
+    const folder = await this.folderModel
+      .findByIdAndUpdate(
+        { _id: id },
+        {
+          name: updateFolderDto.name,
+          owner: new Types.ObjectId(updateFolderDto.owner),
+        },
+        { new: true },
+      )
+      .exec();
+    if (!folder) {
+      throw new NotFoundException(Folder.name, id);
+    }
+    await this.userModel
+      .findByIdAndUpdate(
+        { _id: folder.owner },
+        { $addToSet: { folder: folder._id } },
+        { new: true },
+      )
+      .exec();
+    return folder;
   }
 
   remove(id: number) {

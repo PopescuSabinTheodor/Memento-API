@@ -1,4 +1,8 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateFolderDto } from './create-folder.dto';
 
-export class UpdateFolderDto extends PartialType(CreateFolderDto) {}
+export class UpdateFolderDto extends PartialType(CreateFolderDto) {
+  name: string;
+
+  owner: string;
+}
