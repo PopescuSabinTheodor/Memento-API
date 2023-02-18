@@ -16,7 +16,15 @@ export class User {
   @Prop()
   password: string;
 
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Folder' }] })
+  @Prop({
+    type: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Folder',
+        uniqueItems: true,
+      },
+    ],
+  })
   folder: Folder[];
 }
 
