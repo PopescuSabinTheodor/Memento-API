@@ -15,17 +15,6 @@ export class User {
 
   @Prop()
   password: string;
-
-  @Prop({
-    type: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Folder',
-        uniqueItems: true,
-      },
-    ],
-  })
-  folder: Folder[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
