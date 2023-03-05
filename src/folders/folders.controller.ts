@@ -6,8 +6,6 @@ import {
   Patch,
   Param,
   Delete,
-  UseFilters,
-  HttpCode,
 } from '@nestjs/common';
 import { FoldersService } from './folders.service';
 import { CreateFolderDto } from './dto/create-folder.dto';
@@ -44,6 +42,6 @@ export class FoldersController {
 
   @Delete(':id')
   async remove(@Param('id') id: string): Promise<any> {
-    return await this.foldersService.removeById(id);
+    return await this.foldersService.remove(id);
   }
 }
