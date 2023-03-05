@@ -66,11 +66,7 @@ export class FoldersService {
     return folder;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} folder`;
-  }
-
-  async removeById(id: string): Promise<any> {
+  async remove(id: string): Promise<string> {
     const folder = await this.folderModel.deleteOne({ _id: id });
     if (folder.acknowledged === true && folder.deletedCount > 0) {
       return `Folder with id ${id} deleted`;
