@@ -56,13 +56,6 @@ export class FoldersService {
     if (!folder) {
       throw new NotFoundException(Folder.name, id);
     }
-    await this.userModel
-      .findByIdAndUpdate(
-        { _id: folder.owner },
-        { $addToSet: { folder: folder._id } },
-        { new: true },
-      )
-      .exec();
     return folder;
   }
 
